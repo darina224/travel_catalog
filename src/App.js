@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import TravelList from './components/TravelList';
 import Filter from './components/Filter';
+import AddTravelForm from './components/AddTravelForm';
 
 function App() {
   const [travels, setTravels] = useState([
@@ -31,13 +32,6 @@ function App() {
       title: "Тропический рай",
       description: "Белые пляжи, изумрудное море и вкусная еда.",
       likes: 0
-    },
-    {
-      id: 5,
-      country: "Италия",
-      title: "Венецианская сказка",
-      description: "Гондолы, каналы и карнавалы.",
-      likes: 0
     }
   ]);
 
@@ -62,6 +56,19 @@ function App() {
     );
   };
 
+  // Функция для добавления нового путешествия
+  const handleAddTravel = (newTravel) => {
+    const newId = Math.max(...travels.map(t => t.id), 0) + 1;
+    const travelToAdd = {
+      id: newId,
+      country: newTravel.country,
+      title: newTravel.title,
+      description: newTravel.description,
+      likes: 0
+    };
+    setTravels([...travels, travelToAdd]);
+  };
+
   return (
     <div style={{ 
       maxWidth: '800px', 
@@ -76,6 +83,8 @@ function App() {
       }}>
         Каталог путешествий
       </h1>
+      
+      <AddTravelForm onAddTravel={handleAddTravel} />
       
       <Filter
         countries={countries}
