@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TravelCard = ({ travel }) => {
+const TravelCard = ({ travel, onLike }) => {
   return (
     <div style={{
       border: '1px solid #ddd',
@@ -13,7 +13,25 @@ const TravelCard = ({ travel }) => {
       <p style={{ margin: '0 0 8px 0', color: '#666' }}>
         <strong>Страна:</strong> {travel.country}
       </p>
-      <p style={{ margin: '0', color: '#666' }}>{travel.description}</p>
+      <p style={{ margin: '0 0 15px 0', color: '#666' }}>{travel.description}</p>
+      
+      {/* Кнопка лайка */}
+      <button
+        onClick={() => onLike(travel.id)}
+        style={{
+          backgroundColor: '#ff6b6b',
+          color: 'white',
+          border: 'none',
+          padding: '8px 16px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          fontSize: '14px'
+        }}
+        onMouseEnter={(e) => e.target.style.backgroundColor = '#ff5252'}
+        onMouseLeave={(e) => e.target.style.backgroundColor = '#ff6b6b'}
+      >
+        ❤️ Нравится ({travel.likes})
+      </button>
     </div>
   );
 };

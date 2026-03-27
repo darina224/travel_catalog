@@ -2,32 +2,47 @@ import React, { useState } from 'react';
 import TravelList from './components/TravelList';
 
 function App() {
-  const [travels] = useState([
+  const [travels, setTravels] = useState([
     {
       id: 1,
       country: "Италия",
       title: "Римские каникулы",
-      description: "Колизей, фонтан Треви, паста и солнце."
+      description: "Колизей, фонтан Треви, паста и солнце.",
+      likes: 0
     },
     {
       id: 2,
       country: "Франция",
       title: "Парижская мечта",
-      description: "Эйфелева башня, круассаны и искусство."
+      description: "Эйфелева башня, круассаны и искусство.",
+      likes: 0
     },
     {
       id: 3,
       country: "Япония",
       title: "Сакура и самураи",
-      description: "Токио, Киото, суши и традиции."
+      description: "Токио, Киото, суши и традиции.",
+      likes: 0
     },
     {
       id: 4,
       country: "Таиланд",
       title: "Тропический рай",
-      description: "Белые пляжи, изумрудное море и вкусная еда."
+      description: "Белые пляжи, изумрудное море и вкусная еда.",
+      likes: 0
     }
   ]);
+
+  // Функция для обработки лайков
+  const handleLike = (id) => {
+    setTravels(prevTravels =>
+      prevTravels.map(travel =>
+        travel.id === id
+          ? { ...travel, likes: travel.likes + 1 }
+          : travel
+      )
+    );
+  };
 
   return (
     <div style={{ 
@@ -41,10 +56,10 @@ function App() {
         color: '#333',
         marginBottom: '30px'
       }}>
-        Каталог путешествий
+        🗺️ Каталог путешествий
       </h1>
       
-      <TravelList travels={travels} />
+      <TravelList travels={travels} onLike={handleLike} />
     </div>
   );
 }
