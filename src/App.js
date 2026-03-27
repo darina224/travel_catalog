@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import TravelList from './components/TravelList';
+import Filter from './components/Filter';
 
 function App() {
   const [travels, setTravels] = useState([
@@ -30,8 +31,25 @@ function App() {
       title: "Тропический рай",
       description: "Белые пляжи, изумрудное море и вкусная еда.",
       likes: 0
+    },
+    {
+      id: 5,
+      country: "Италия",
+      title: "Венецианская сказка",
+      description: "Гондолы, каналы и карнавалы.",
+      likes: 0
     }
   ]);
+
+  const [selectedCountry, setSelectedCountry] = useState('');
+
+  // Получаем уникальные страны для фильтра
+  const countries = [...new Set(travels.map(travel => travel.country))];
+
+  // Фильтруем путешествия по выбранной стране
+  const filteredTravels = selectedCountry
+    ? travels.filter(travel => travel.country === selectedCountry)
+    : travels;
 
   // Функция для обработки лайков
   const handleLike = (id) => {
@@ -56,10 +74,16 @@ function App() {
         color: '#333',
         marginBottom: '30px'
       }}>
-        🗺️ Каталог путешествий
+        Каталог путешествий
       </h1>
       
-      <TravelList travels={travels} onLike={handleLike} />
+      <Filter
+        countries={countries}
+        selectedCountry={selectedCountry}
+        onCountryChange={setSelectedCountry}
+      />
+      
+      <TravelList travels={filteredTravels} onLike={handleLike} />
     </div>
   );
 }
